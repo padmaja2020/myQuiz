@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from  '@angular/common/http';
 import {Observable} from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+import { Quiz, Question } from './quiz.model';
 
 
 @Injectable({
@@ -8,9 +11,21 @@ import {Observable} from 'rxjs';
 })
 export class QuestionsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public getJSON (fileID:string){
-    return this.http.get(`./assets/${fileID}.json`) as Observable<any>;
+  public getQuizzes() {
+   
+    return this.http.get(`./assets/quiz-list.json`).pipe(
+      map((result: any) => {
+        return result.map((r: any) => new Quiz(r.label, r.name, r.description, r.fileName));
+      })
+    );
+  }
+  public getQuestions(fileName: string) {
+    return this.http.get(`./assets/${fileName}.json`).pipe(
+      map((result: any) => {
+        return result.map((r:any) => new Question(r.label, r.choices));
+      })
+    );
   }
 }
