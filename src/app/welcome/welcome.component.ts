@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {QuestionsService} from '../questions.service';
-import { MatCardModule } from '@angular/material/card';
+//import { MatCardModule } from '@angular/material/card';
 import {Quiz} from "../quiz.model";
 
 @Component({
